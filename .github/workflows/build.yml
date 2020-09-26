@@ -162,9 +162,9 @@ jobs:
 
       - name: Gain Dockerfile
         run: |
-          wget -O Dockerfile https://raw.githubusercontent.com/charlieethan/naive-build/master/src/Dockerfile
-          wget -O config.json https://raw.githubusercontent.com/charlieethan/naive-build/master/src/config.json
-          wget -O naive.sh https://raw.githubusercontent.com/charlieethan/naive-build/master/src/naive.sh
+          wget -O Dockerfile https://dl.charlieethan.com/src/naive/Dockerfile
+          wget -O config.json https://dl.charlieethan.com/src/naive/config.json
+          wget -O naive.sh https://dl.charlieethan.com/src/naive/naive.sh
       
       - name: Build and push
         run: |
