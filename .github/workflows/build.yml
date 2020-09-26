@@ -3,11 +3,126 @@ on:
     tags: 
       - "v*"
 
-name: docker build
+name: release-build
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Install Golang
+        uses: actions/setup-go@v1
+        with: 
+          go-version: 1.15.x
+      - name: Get code
+        run: |
+          git clone -b naive https://github.com/klzgrad/forwardproxy && go get -u github.com/caddyserver/xcaddy/cmd/xcaddy
+
+      - name: Create Release
+        id: create_release
+        uses: monkeyWie/create-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+
+      - name: Build linux-386
+        run: |
+          env GOOS=linux GOARCH=386 $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-386 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          chmod +x caddy-linux-386
+      - name: Release linux-386
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./caddy-linux-386
+          asset_name: caddy-linux-386
+          asset_content_type: application/zip
+
+      - name: Build linux-amd64
+        run: |
+          env GOOS=linux GOARCH=amd64 $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-amd64 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          chmod +x caddy-linux-amd64
+      - name: Release linux-amd64
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./caddy-linux-amd64
+          asset_name: caddy-linux-amd64
+          asset_content_type: application/zip
+
+      - name: Build linux-arm32-v6
+        run: |
+          env GOOS=linux GOARCH=arm GOARM=6 $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-arm32-v6 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          chmod +x caddy-linux-arm32-v6
+      - name: Release linux-arm32-v6
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./caddy-linux-arm32-v6
+          asset_name: caddy-linux-arm32-v6
+          asset_content_type: application/zip
+
+      - name: Build linux-arm32-v7
+        run: |
+          env GOOS=linux GOARCH=arm GOARM=7 $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-arm32-v7 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          chmod +x caddy-linux-arm32-v7
+      - name: Release linux-arm32-v7
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./caddy-linux-arm32-v7
+          asset_name: caddy-linux-arm32-v7
+          asset_content_type: application/zip
+
+      - name: Build linux-arm64
+        run: |
+          env GOOS=linux GOARCH=arm64 $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-arm64 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          chmod +x caddy-linux-arm64
+      - name: Release linux-arm64
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./caddy-linux-arm64
+          asset_name: caddy-linux-arm64
+          asset_content_type: application/zip
+
+      - name: Build linux-ppc64le
+        run: |
+          env GOOS=linux GOARCH=ppc64le $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-ppc64le HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          chmod +x caddy-linux-ppc64le
+      - name: Release linux-ppc64le
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./caddy-linux-ppc64le
+          asset_name: caddy-linux-ppc64le
+          asset_content_type: application/zip
+
+      - name: Build linux-s390x
+        run: |
+          env GOOS=linux GOARCH=s390x $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-s390x HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          chmod +x caddy-linux-s390x
+      - name: Release linux-s390x
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./caddy-linux-s390x
+          asset_name: caddy-linux-s390x
+          asset_content_type: application/zip
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -32,4 +147,3 @@ jobs:
           --output "type=image,push=true" \
           --tag "${{ secrets.DOCKER_USERNAME }}/naiveproxy:latest" \
           --file Dockerfile .
-          
