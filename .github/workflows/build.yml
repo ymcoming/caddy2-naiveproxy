@@ -15,9 +15,9 @@ jobs:
       
       - name: Setup Go PATH
         run: |
-          export PATH=$PATH:$(go env GOPATH)/bin
-          go get -u golang.org/x/lint/golint
-          golint -set_exit_status ./...
+          echo "##[set-env name=GOPATH;]$(dirname $GITHUB_WORKSPACE)"
+          echo "##[add-path]$(dirname $GITHUB_WORKSPACE)/bin"
+        shell: bash
 
       - name: Get code
         run: |
