@@ -8,6 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -17,12 +20,16 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Gain Dockerfile
+        run: |
+          wget -O Dockerfile https://raw.githubusercontent.com/charlieethan/naive-build/master/src/Dockerfile
+          wget -O config.json https://raw.githubusercontent.com/charlieethan/naive-build/master/src/config.json
+          wget -O naive.sh https://raw.githubusercontent.com/charlieethan/naive-build/master/src/naive.sh
+      
       - name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./Dockerfile
-          platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
-          push: true
-          tags: |
-            charlieethan/naiveproxy:latest
+        run: |
+          docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x \
+          --output "type=image,push=true" \
+          --tag "${{ secrets.DOCKER_USERNAME }}/naiveproxy:latest" \
+          --file Dockerfile .
+          
