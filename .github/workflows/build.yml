@@ -9,20 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install Golang
-        run: |
-          wget https://golang.org/dl/go1.15.2.linux-amd64.tar.gz && tar -zxvf go1.15.2.linux-amd64.tar.gz && rm -rf go1.15.2.linux-amd64.tar.gz
-          mv go /usr/local
-          cat << 'EOF' >> ~/.bashrc
-          export GOROOT=/usr/local/go
-          export GOPATH=$HOME/go
-          export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-          EOF
-          mkdir $HOME/go && source ~/.bashrc
+        uses: actions/setup-go@v2
+        with: 
+         go-version: 1.15.x
 
       - name: Get code
         run: |
-          git clone -b naive https://github.com/klzgrad/forwardproxy
-          go get -u github.com/caddyserver/xcaddy/cmd/xcaddy
+          git clone -b naive https://github.com/klzgrad/forwardproxy && wget -o xcaddy https://github.com/charlieethan/naive-build/blob/master/src/xcaddy && chmod +x xcaddy
 
       - name: Create Release
         id: create_release
@@ -35,7 +28,7 @@ jobs:
 
       - name: Build linux-386
         run: |
-          env GOOS=linux GOARCH=386 $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-386 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          env GOOS=linux GOARCH=386 ./xcaddy build --output $PWD/caddy-linux-386 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-386
       - name: Release linux-386
         uses: actions/upload-release-asset@v1.0.2
@@ -51,7 +44,7 @@ jobs:
         env:
           GOPATH: $PWD/go
         run: |
-          env GOOS=linux GOARCH=amd64 $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-amd64 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          env GOOS=linux GOARCH=amd64 ./xcaddy build --output $PWD/caddy-linux-amd64 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-amd64
       - name: Release linux-amd64
         uses: actions/upload-release-asset@v1.0.2
@@ -67,7 +60,7 @@ jobs:
         env:
           GOPATH: $PWD/go
         run: |
-          env GOOS=linux GOARCH=arm GOARM=6 $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-arm32-v6 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          env GOOS=linux GOARCH=arm GOARM=6 ./xcaddy build --output $PWD/caddy-linux-arm32-v6 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-arm32-v6
       - name: Release linux-arm32-v6
         uses: actions/upload-release-asset@v1.0.2
@@ -83,7 +76,7 @@ jobs:
         env:
           GOPATH: $PWD/go
         run: |
-          env GOOS=linux GOARCH=arm GOARM=7 $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-arm32-v7 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          env GOOS=linux GOARCH=arm GOARM=7 ./xcaddy build --output $PWD/caddy-linux-arm32-v7 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-arm32-v7
       - name: Release linux-arm32-v7
         uses: actions/upload-release-asset@v1.0.2
@@ -99,7 +92,7 @@ jobs:
         env:
           GOPATH: $PWD/go
         run: |
-          env GOOS=linux GOARCH=arm64 $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-arm64 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          env GOOS=linux GOARCH=arm64 ./xcaddy build --output $PWD/caddy-linux-arm64 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-arm64
       - name: Release linux-arm64
         uses: actions/upload-release-asset@v1.0.2
@@ -115,7 +108,7 @@ jobs:
         env:
           GOPATH: $PWD/go
         run: |
-          env GOOS=linux GOARCH=ppc64le $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-ppc64le HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          env GOOS=linux GOARCH=ppc64le ./xcaddy build --output $PWD/caddy-linux-ppc64le HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-ppc64le
       - name: Release linux-ppc64le
         uses: actions/upload-release-asset@v1.0.2
@@ -131,7 +124,7 @@ jobs:
         env:
           GOPATH: $PWD/go
         run: |
-          env GOOS=linux GOARCH=s390x $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-s390x HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          env GOOS=linux GOARCH=s390x ./xcaddy build --output $PWD/caddy-linux-s390x HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-s390x
       - name: Release linux-s390x
         uses: actions/upload-release-asset@v1.0.2
