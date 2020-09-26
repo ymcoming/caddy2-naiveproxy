@@ -13,6 +13,8 @@ jobs:
         with: 
           go-version: 1.15.x
       - name: Get code
+        env:
+          GOPATH: $PWD/go
         run: |
           git clone -b naive https://github.com/klzgrad/forwardproxy && go get -u github.com/caddyserver/xcaddy/cmd/xcaddy
 
@@ -26,6 +28,8 @@ jobs:
           release_name: ${{ github.ref }}
 
       - name: Build linux-386
+        env:
+          GOPATH: $PWD/go
         run: |
           env GOOS=linux GOARCH=386 $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-386 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-386
@@ -40,6 +44,8 @@ jobs:
           asset_content_type: application/zip
 
       - name: Build linux-amd64
+        env:
+          GOPATH: $PWD/go
         run: |
           env GOOS=linux GOARCH=amd64 $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-amd64 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-amd64
@@ -54,6 +60,8 @@ jobs:
           asset_content_type: application/zip
 
       - name: Build linux-arm32-v6
+        env:
+          GOPATH: $PWD/go
         run: |
           env GOOS=linux GOARCH=arm GOARM=6 $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-arm32-v6 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-arm32-v6
@@ -68,6 +76,8 @@ jobs:
           asset_content_type: application/zip
 
       - name: Build linux-arm32-v7
+        env:
+          GOPATH: $PWD/go
         run: |
           env GOOS=linux GOARCH=arm GOARM=7 $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-arm32-v7 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-arm32-v7
@@ -82,6 +92,8 @@ jobs:
           asset_content_type: application/zip
 
       - name: Build linux-arm64
+        env:
+          GOPATH: $PWD/go
         run: |
           env GOOS=linux GOARCH=arm64 $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-arm64 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-arm64
@@ -96,6 +108,8 @@ jobs:
           asset_content_type: application/zip
 
       - name: Build linux-ppc64le
+        env:
+          GOPATH: $PWD/go
         run: |
           env GOOS=linux GOARCH=ppc64le $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-ppc64le HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-ppc64le
@@ -110,6 +124,8 @@ jobs:
           asset_content_type: application/zip
 
       - name: Build linux-s390x
+        env:
+          GOPATH: $PWD/go
         run: |
           env GOOS=linux GOARCH=s390x $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-s390x HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-s390x
