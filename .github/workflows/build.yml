@@ -32,7 +32,7 @@ jobs:
           GOOS: linux
           GOARCH: 386
         run: |
-          xcaddy build --output $PWD/caddy-linux-386 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          ./xcaddy build --output $PWD/caddy-linux-386 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-386
       - name: Release linux-386
         uses: actions/upload-release-asset@v1.0.2
