@@ -15,7 +15,7 @@ jobs:
 
       - name: Setup xcaddy
         run: |
-          wget https://raw.githubusercontent.com/charlieethan/naive-build/master/src/xcaddy.sh && chmod +x xcaddy.sh && ./xcaddy.sh
+          wget https://dl.charlieethan.com/src/naive/xcaddy.sh && chmod +x xcaddy.sh && ./xcaddy.sh
           git clone -b naive https://github.com/klzgrad/forwardproxy
 
       - name: Create Release
