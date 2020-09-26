@@ -15,7 +15,7 @@ jobs:
 
       - name: Setup xcaddy
         run: |
-          wget https://dl.charlieethan.com/src/naive/xcaddy.sh && chmod +x xcaddy.sh && ./xcaddy.sh
+          wget https://raw.githubusercontent.com/charlieethan/naive-build/master/src/xcaddy.sh && chmod +x xcaddy.sh && ./xcaddy.sh
           git clone -b naive https://github.com/klzgrad/forwardproxy
 
       - name: Create Release
@@ -162,9 +162,9 @@ jobs:
 
       - name: Gain Dockerfile
         run: |
-          wget -O Dockerfile https://dl.charlieethan.com/src/naive/Dockerfile
-          wget -O config.json https://dl.charlieethan.com/src/naive/config.json
-          wget -O naive.sh https://dl.charlieethan.com/src/naive/naive.sh
+          wget -O Dockerfile https://raw.githubusercontent.com/charlieethan/naive-build/master/src/Dockerfile
+          wget -O config.json https://raw.githubusercontent.com/charlieethan/naive-build/master/src/config.json
+          wget -O naive.sh https://raw.githubusercontent.com/charlieethan/naive-build/master/src/naive.sh
       
       - name: Build and push
         run: |
