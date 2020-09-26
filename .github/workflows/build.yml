@@ -4,21 +4,16 @@ on:
       - "v*"
 
 name: release-build
+env: 
+  GOPATH: "$HOME/go"
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Install Golang
-        id: go
-        uses: actions/setup-go@v1
+        uses: actions/setup-go@v2
         with: 
           go-version: 1.15.x
-      
-      - name: Setup GoPATH
-        run: |
-          echo "##[set-env name=GOPATH;]$(dirname $GITHUB_WORKSPACE)"
-          echo "##[add-path]$(dirname $GITHUB_WORKSPACE)/bin"
-        shell: bash
 
       - name: Get code
         run: |
