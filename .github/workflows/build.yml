@@ -12,11 +12,16 @@ jobs:
         uses: actions/setup-go@v1
         with: 
           go-version: 1.15.x
-      - name: setup env
+          
+      - name: Debug
         run: |
-         echo "::set-env name=GOPATH::$(go env GOPATH)"
-         echo "::add-path::$(go env GOPATH)/bin"
-        shell: bash
+         pwd
+         echo ${HOME}
+         echo ${GITHUB_WORKSPACE}
+         echo ${GOPATH}
+         echo ${GOROOT}
+        env:
+         GOPATH: /home/runner/work/woodpecker/go
 
       - name: Get code
         run: |
