@@ -1,0 +1,21 @@
+on:
+  push:
+    branches: 
+      - 'master'
+    tags: 
+      - "v*"
+
+name: docker build
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish to Dockerhub
+        uses: ilteoood/docker_buildx@1.0.4
+        with:
+          publish: true
+          imageName: charlieethan/naiveproxy
+          platform: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
+          tag: latest
+          dockerHubUser: ${{ secrets.DOCKER_USERNAME }}
+          dockerHubPassword: ${{ secrets.DOCKER_PASSWORD }}
