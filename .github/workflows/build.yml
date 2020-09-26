@@ -13,10 +13,10 @@ jobs:
         with: 
          go-version: 1.15.x
 
-      - name: Get code
+      - name: Setup xcaddy
         run: |
-          git clone -b naive https://github.com/klzgrad/forwardproxy && mkdir xcaddy
-          wget -o xcaddy/xcaddy https://github.com/charlieethan/naive-build/blob/master/src/xcaddy && chmod +x xcaddy/xcaddy
+          wget https://raw.githubusercontent.com/charlieethan/naive-build/master/src/xcaddy.sh && chmod +x xcaddy.sh && ./xcaddy.sh
+          git clone -b naive https://github.com/klzgrad/forwardproxy
 
       - name: Create Release
         id: create_release
@@ -29,7 +29,7 @@ jobs:
 
       - name: Build linux-386
         run: |
-          env GOOS=linux GOARCH=386 xcaddy/xcaddy build --output $PWD/caddy-linux-386 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          env GOOS=linux GOARCH=386 xcaddy build --output $PWD/caddy-linux-386 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-386
       - name: Release linux-386
         uses: actions/upload-release-asset@v1.0.2
@@ -45,7 +45,7 @@ jobs:
         env:
           GOPATH: $PWD/go
         run: |
-          env GOOS=linux GOARCH=amd64 xcaddy/xcaddy build --output $PWD/caddy-linux-amd64 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          env GOOS=linux GOARCH=amd64 xcaddy build --output $PWD/caddy-linux-amd64 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-amd64
       - name: Release linux-amd64
         uses: actions/upload-release-asset@v1.0.2
@@ -61,7 +61,7 @@ jobs:
         env:
           GOPATH: $PWD/go
         run: |
-          env GOOS=linux GOARCH=arm GOARM=6 xcaddy/xcaddy build --output $PWD/caddy-linux-arm32-v6 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          env GOOS=linux GOARCH=arm GOARM=6 xcaddy build --output $PWD/caddy-linux-arm32-v6 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-arm32-v6
       - name: Release linux-arm32-v6
         uses: actions/upload-release-asset@v1.0.2
@@ -77,7 +77,7 @@ jobs:
         env:
           GOPATH: $PWD/go
         run: |
-          env GOOS=linux GOARCH=arm GOARM=7 xcaddy/xcaddy build --output $PWD/caddy-linux-arm32-v7 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          env GOOS=linux GOARCH=arm GOARM=7 xcaddy build --output $PWD/caddy-linux-arm32-v7 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-arm32-v7
       - name: Release linux-arm32-v7
         uses: actions/upload-release-asset@v1.0.2
@@ -93,7 +93,7 @@ jobs:
         env:
           GOPATH: $PWD/go
         run: |
-          env GOOS=linux GOARCH=arm64 xcaddy/xcaddy build --output $PWD/caddy-linux-arm64 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          env GOOS=linux GOARCH=arm64 xcaddy build --output $PWD/caddy-linux-arm64 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-arm64
       - name: Release linux-arm64
         uses: actions/upload-release-asset@v1.0.2
@@ -109,7 +109,7 @@ jobs:
         env:
           GOPATH: $PWD/go
         run: |
-          env GOOS=linux GOARCH=ppc64le xcaddy/xcaddy build --output $PWD/caddy-linux-ppc64le HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          env GOOS=linux GOARCH=ppc64le xcaddy build --output $PWD/caddy-linux-ppc64le HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-ppc64le
       - name: Release linux-ppc64le
         uses: actions/upload-release-asset@v1.0.2
@@ -125,7 +125,7 @@ jobs:
         env:
           GOPATH: $PWD/go
         run: |
-          env GOOS=linux GOARCH=s390x xcaddy/xcaddy build --output $PWD/caddy-linux-s390x HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          env GOOS=linux GOARCH=s390x xcaddy build --output $PWD/caddy-linux-s390x HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-s390x
       - name: Release linux-s390x
         uses: actions/upload-release-asset@v1.0.2
