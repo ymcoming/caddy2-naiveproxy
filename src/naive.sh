@@ -12,10 +12,10 @@ else
             ARCH="amd64"
             ;;
         linux/arm/v6)
-            ARCH="arm6"
+            ARCH="arm32-v6"
             ;;
         linux/arm/v7)
-            ARCH="arm7"
+            ARCH="arm32-v7"
             ;;
         linux/arm64|linux/arm64/v8)
             ARCH="arm64"
@@ -33,10 +33,10 @@ else
 fi
 [ -z "${ARCH}" ] && echo "Error: Not supported OS Architecture" && exit 1
 # Download binary file
-CADDY_FILE="caddy_linux_${ARCH}"
+CADDY_FILE="caddy-linux-${ARCH}"
 
 echo "Downloading binary file: ${CADDY_FILE}"
-wget -O /usr/bin/caddy https://dl.charlieethan.com/software/naiveproxy/${CADDY_FILE} > /dev/null 2>&1
+wget -O /usr/bin/caddy https://github.com/charlieethan/naive-build/releases/latest/download/${CADDY_FILE} > /dev/null 2>&1
 if [ $? -ne 0 ]; then
     echo "Error: Failed to download binary file: ${CADDY_FILE}" && exit 1
 fi
