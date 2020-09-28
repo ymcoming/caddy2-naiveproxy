@@ -9,20 +9,29 @@ name: release-build
 jobs:
   build:
     runs-on: ubuntu-latest
+    env: 
+     TZ: Asia/Hong_Kong
     steps:
+
       - name: Install Golang
         uses: actions/setup-go@v2
         with: 
          go-version: 1.15.x
 
+      - name: Setup variables
+        run: |
+          echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
+          echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
+        shell: bash
+
       - name: Setup xcaddy
         run: |
-          wget https://raw.githubusercontent.com/charlieethan/naive-build/master/src/xcaddy.sh && chmod +x xcaddy.sh && ./xcaddy.sh
+          go get -u github.com/caddyserver/xcaddy/cmd/xcaddy
           git clone -b naive https://github.com/klzgrad/forwardproxy
 
       - name: Create Release
         id: create_release
-        uses: monkeyWie/create-release@master
+        uses: actions/create-release@v1.1.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -34,7 +43,7 @@ jobs:
           GOOS: linux
           GOARCH: amd64
         run: |
-          ./xcaddy build --output $PWD/caddy-linux-amd64 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
+          $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-amd64 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-amd64
       - name: Release linux-amd64
         uses: actions/upload-release-asset@v1.0.2
@@ -44,4 +53,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./caddy-linux-amd64
           asset_name: caddy-linux-amd64
-          asset_content_type: application/zip
+          asset_content_type: application/zip 
