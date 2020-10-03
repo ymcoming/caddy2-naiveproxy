@@ -22,7 +22,7 @@ jobs:
 
       - name: Setup variables
         run: |
-          echo "::set-env name=VERSION::$(wget --no-check-certificate -qO- https://raw.githubusercontent.com/ymcoming/caddy2-naiveproxy/master/version | head -1)"
+          echo "::set-env name=VERSION::$(wget --no-check-certificate -qO- https://raw.githubusercontent.com/charlieethan/naive-build/master/version | head -1)"
           echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
           echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
         shell: bash
