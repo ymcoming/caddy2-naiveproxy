@@ -1,6 +1,5 @@
 on:
   watch:
-    types: started
   push:
     branches: 
       - 'master'
@@ -22,6 +21,7 @@ jobs:
 
       - name: Setup variables
         run: |
+          echo "::set-env name=VERSION::${{ 'v2.2.1test' }}
           echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
           echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
         shell: bash
@@ -37,8 +37,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ 'V2.2.1' }}
-          release_name: ${{ 'V2.2.1' }}
+          tag_name: ${{ env.VERSION }}
+          release_name: ${{ env.VERSION }}
 
       - name: Build linux-amd64
         env:
