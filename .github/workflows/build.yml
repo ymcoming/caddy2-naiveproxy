@@ -45,7 +45,8 @@ jobs:
           GOOS: linux
           GOARCH: amd64
         run: |
-          $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-amd64 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy --with github.com/mastercactapus/caddy2-proxyprotocol=$PWD/caddy2-proxyprotocol
+          # $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-amd64 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy --with github.com/mastercactapus/caddy2-proxyprotocol=$PWD/caddy2-proxyprotocol
+          $GOPATH/bin/xcaddy build --output $PWD/caddy-linux-amd64 HEAD --with github.com/caddyserver/forwardproxy=$PWD/forwardproxy
           chmod +x caddy-linux-amd64
       - name: Release linux-amd64
         uses: actions/upload-release-asset@v1.0.2
