@@ -21,7 +21,7 @@ jobs:
 
       - name: Setup variables
         run: |
-          echo "::set-env name=VERSION::${{ 'v2.2.1test' }}"
+          echo "::set-env name=VERSION::${{ 'caddy_test' }}"
           echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
           echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
         shell: bash
