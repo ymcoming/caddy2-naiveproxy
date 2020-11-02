@@ -54,5 +54,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./caddy-linux-amd64
-          asset_name: caddy-linux-amd64
+          asset_name: caddy2
           asset_content_type: application/zip
