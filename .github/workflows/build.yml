@@ -21,9 +21,12 @@ jobs:
 
       - name: Setup variables
         run: |
-          echo "::set-env name=VERSION::${{ 'caddy_test' }}"
-          echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
-          echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
+          /* echo "::set-env name=VERSION::${{ 'caddy_test' }}"
+          /* echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
+          /* echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
+          echo "VERSION=${{ 'caddy_test' }}" >> $GITHUB_ENV
+          echo "GOPATH=$(dirname $GITHUB_WORKSPACE)" >> $GITHUB_ENV
+          echo "add-path=$(dirname $GITHUB_WORKSPACE)/bin" >> $GITHUB_ENV
         shell: bash
 
       - name: Setup xcaddy
