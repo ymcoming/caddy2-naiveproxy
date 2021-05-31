@@ -1,14 +1,8 @@
 # caddy2-naiveproxy
 
-update:
+wget https://cdn.jsdelivr.net/gh/ymcoming/caddy2-naiveproxy@caddy_test/install.sh
 
-rm caddy2
-
-wget https://github.com/ymcoming/caddy2-naiveproxy/releases/download/xxx/caddy2
-
-cp -f caddy2 -d /etc/caddy
-
-chmod +x /etc/caddy/caddy2         
+chmod +x ./install.sh         
 
 
 ARM64:
