@@ -4,6 +4,12 @@ wget https://cdn.jsdelivr.net/gh/ymcoming/caddy2-naiveproxy@caddy_test/install.s
 
 chmod +x ./install.sh         
 
+./install.sh  
 
 ARM64:
-https://github.com/ymcoming/caddy2-arm64/releases/download/2.4.1/caddy2
+
+wget https://github.com/ymcoming/caddy2-arm64/releases/download/2.4.1/caddy2
+
+chmod +x ./install.sh         
+
+./install.sh
