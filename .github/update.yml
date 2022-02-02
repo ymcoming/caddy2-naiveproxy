@@ -1,12 +1,10 @@
 on:
   watch:
   push:
-    branches: 
-      - 'master'
-    paths-ignore:
-      - 'src'
-      - '**.md'
-      - '**.yml'
+    branches:
+      - main
+    paths:
+      - ".github/workflows/update.yml"
 
 name: release-build
 jobs:
