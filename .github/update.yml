@@ -6,7 +6,6 @@ on:
     paths:
       - ".github/workflows/update.yml"
 
-name: release-build
 jobs:
   update:
     if: github.repository == 'ymcoming/caddy2-naiveproxy'
