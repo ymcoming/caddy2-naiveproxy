@@ -28,9 +28,12 @@ jobs:
 
       - name: Setup xcaddy
         run: |
-          go get -u github.com/caddyserver/xcaddy/cmd/xcaddy
-          git clone -b naive https://github.com/klzgrad/forwardproxy
-          git clone https://github.com/mastercactapus/caddy2-proxyprotocol.git
+            go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
+            xcaddy build latest \
+                --with github.com/mholt/caddy-l4 \
+                --with github.com/caddy-dns/cloudflare \
+                --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive
+           
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.1.4
