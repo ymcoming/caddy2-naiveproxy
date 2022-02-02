@@ -11,7 +11,7 @@ on:
 name: release-build
 jobs:
   update:
-    if: github.repository == 'azples/caddys'
+    if: github.repository == 'ymcoming/caddy2-naiveproxy'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
